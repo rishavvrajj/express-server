@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    /* Target & Environment */
+    "target": "ES2022",                          /* Output modern, highly-compatible JavaScript */
+    "module": "NodeNext",                        /* Best module system for modern Node.js/bundlers */
+    "moduleResolution": "NodeNext",              /* Mimics Node.js file resolution strategy */
+    "lib": ["ES2022", "DOM"],                    /* Type definitions available globally (add "DOM" for web apps) */
+
+    /* Build Settings */
+    "rootDir": "./src",                          /* Where your source code lives */
+    "outDir": "./dist",                          /* Where compiled JavaScript files will go */
+    "sourceMap": true,                           /* Generates .map files for debugging original TS in production */
+    "removeComments": true,                      /* Strips comments from compiled JavaScript */
+
+    /* Type Checking Strictness */
+    "strict": true,                              /* Enables all strict type-checking options */
+    "noUncheckedIndexedAccess": true,            /* Errors when accessing an array/object without a safety check */
+    "noImplicitOverride": true,                  /* Ensures classes use the 'override' keyword when extending */
+
+    /* Compatibility & Speed */
+    "esModuleInterop": true,                      /* Smooth interoperability between CommonJS and ES Modules */
+    "forceConsistentCasingInFileNames": true,    /* Errors out if imports don't match the file's exact casing */
+    "skipLibCheck": true                         /* Skips type checking of 3rd-party node_modules files to save build time */
+  },
+  "include": ["src/**/*"],                       /* Only compile TypeScript files found inside the src/ directory */
+  "exclude": ["node_modules", "dist"]            /* Explicitly ignore dependencies and build outputs */
+}

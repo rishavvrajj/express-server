@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { authenticate } from "../middlewares/auth.middleware";
-import { createUserTask, getUserTaskById, getUserTasks, updateUserTask } from "../services/user.task.service";
+import { createUserTask, deleteUserTask, getUserTaskById, getUserTasks, updateUserTask } from "../services/user.task.service";
 import { AppError } from "../errors/AppError";
 
 export const userTaskRouter = Router();
@@ -71,6 +71,23 @@ userTaskRouter.patch("/:taskId", async (req: Request, res: Response, next: NextF
             data: {
                 task
             }
+        })
+    } catch (error) {
+        next(error)
+    }
+})
+
+userTaskRouter.delete("/:taskId", async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const taskId = req.params.taskId
+
+        if (typeof taskId !== "string" || taskId.trim() === "") {
+            throw new AppError(400, "Task ID is required");
+        }
+
+        await deleteUserTask(taskId, req.user!.userId)
+        res.status(200).json({
+            success: true
         })
     } catch (error) {
         next(error)

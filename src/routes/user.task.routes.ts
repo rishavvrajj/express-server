@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response, Router } from "express";
 import { authenticate } from "../middlewares/auth.middleware";
-import { createUserTask, getUserTasks } from "../services/user.task.service";
+import { createUserTask, getUserTaskById, getUserTasks } from "../services/user.task.service";
+import { AppError } from "../errors/AppError";
 
 export const userTaskRouter = Router();
 userTaskRouter.use(authenticate)
@@ -28,6 +29,26 @@ userTaskRouter.get("/", async (req: Request, res: Response, next: NextFunction) 
             success: true,
             data: {
                 tasks
+            }
+        })
+    } catch (error) {
+        next(error)
+    }
+})
+
+userTaskRouter.get("/:taskId", async (req:Request, res: Response, next: NextFunction) => {
+    try {
+        const taskId = req.params.taskId
+
+        if (typeof taskId !== "string" || taskId.trim() === "") {
+            throw new AppError(400, "Task ID is required");
+        }
+
+        const task = await getUserTaskById(req.user!.userId, taskId)
+        res.status(200).json({
+            success: true,
+            data: {
+                task
             }
         })
     } catch (error) {
